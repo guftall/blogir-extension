@@ -15,15 +15,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: npm install -g web-ext
-        working-directory: ./firefox
-      - run: cd firefox
-        working-directory: ./firefox
-      - run: web-ext sign --api-key={{MOZ_API_KEY}} --api-secret={{MOZ_API_SEC}}
-        working-directory: ./firefox
-      - run: ls -la
+      - run: |
+          npm install -g web-ext
+          web-ext sign --api-key={{MOZ_API_KEY}} --api-secret={{MOZ_API_SEC}}
         working-directory: ./firefox
 
-      - name: Echo time
+      - name: list files
         working-directory: ./firefox
-        run: echo 'I am time'
+        run: ls -la
