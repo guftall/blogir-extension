@@ -11,12 +11,13 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Sign
+      - name: Nodejs
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
       - run: |
           npm install -g web-ext
+          echo ${{secrets.TEST_KEY}}
           web-ext sign --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}}
         working-directory: ./firefox
 
