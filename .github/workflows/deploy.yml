@@ -1,0 +1,23 @@
+name: Sign and Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Greeting
+    steps:
+      - uses: actions/checkout@v2
+      - name: Sign
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+        - run: npm install -g web-ext
+        - run: cd firefox
+        - run: web-ext sign --api-key={{MOZ_API_KEY}} --api-secret={{MOZ_API_SEC}}
+        - run: ls -la
+
+      - name: Echo time
+       run: echo 'I am time'
