@@ -17,10 +17,9 @@ jobs:
           node-version: '12.x'
       - run: |
           npm install -g web-ext
-          echo ${{secrets.TEST_KEY}}
           web-ext sign --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}}
         working-directory: ./firefox
 
       - name: list files
         working-directory: ./firefox
-        run: ls -la
+        run: ls -la web-ext-artifacts
