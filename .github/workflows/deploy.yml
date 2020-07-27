@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Building
+    name: Building Firefox Add-on
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -15,10 +15,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+        working-directory: ./firefox
       - run: npm install -g web-ext
       - run: cd firefox
       - run: web-ext sign --api-key={{MOZ_API_KEY}} --api-secret={{MOZ_API_SEC}}
       - run: ls -la
 
       - name: Echo time
+        working-directory: ./firefox
         run: echo 'I am time'
