@@ -8,16 +8,17 @@ on:
 jobs:
   build:
     name: Greeting
+    runs-on: ubuntu-20
     steps:
       - uses: actions/checkout@v2
       - name: Sign
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-        - run: npm install -g web-ext
-        - run: cd firefox
-        - run: web-ext sign --api-key={{MOZ_API_KEY}} --api-secret={{MOZ_API_SEC}}
-        - run: ls -la
+      - run: npm install -g web-ext
+      - run: cd firefox
+      - run: web-ext sign --api-key={{MOZ_API_KEY}} --api-secret={{MOZ_API_SEC}}
+      - run: ls -la
 
       - name: Echo time
-       run: echo 'I am time'
+        run: echo 'I am time'
