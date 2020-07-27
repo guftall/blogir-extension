@@ -30,7 +30,6 @@ function initialize() {
     let lastCheckDate = new Date()
 
     const DelayMillisecond = 1500
-    console.log('here')
 
     let cachedText = ''
 
