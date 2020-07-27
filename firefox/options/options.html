@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>__MSG_optionsPageTitle__</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="options.css">
+</head>
+<body>
+  <p class="title">تنظیمات</p>
+  <form>
+    <table>
+      <tr>
+        <td class="col1">
+          دوره ذخیره سازی‌
+        </td>
+        <td class="col2">
+          <label>هر <input type="number" min="5" value="5" name="intervalSec" id="intervalSec" required> ثانیه</label>
+        </td>
+      </tr>
+      <tr>
+        <td class="col1">
+          پاک کردن متن بعد از
+        </td>
+        <td class="col2">
+          <label><input type="number" min="1" value="1" name="persistDays" id="persistDays" required> روز</label>
+        </td>
+      </tr>
+      <tr>
+        <td class="col1 no-border">
+          <button type="submit" id="submit" class="button">ذخیره</button>
+        </td>
+        <td class="col2 no-border"></td>
+        <td class="col3 no-border"></td>
+      </tr>
+    </table>
+  </form>
+  <div id="message"></div>
+  <script src="../config.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

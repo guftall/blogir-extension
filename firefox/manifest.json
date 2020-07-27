@@ -1,0 +1,44 @@
+{
+    "manifest_version": 2,
+    "name": "PostAutoSave",
+    "version": "0.1",
+
+    "description": "Adds auto save functionality to blog.ir panel",
+    "homepage_url": "https://github.com/guftall/blogir-extension",
+
+    "icons": {
+        "24": "icons/blog.ico"
+    },
+
+    "options_ui": {
+        "page": "options/options.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*.blog.ir/*"],
+            "js": [
+                "persister.js",
+                "persisted_posts.js",
+                "modal.js",
+                "config.js"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": [
+            "config.js",
+            "background.js"
+        ]
+    },
+
+    "permissions": [
+        "contextMenus",
+        "storage"
+    ],
+
+    "web_accessible_resources": [
+        "content/modal.html",
+        "content/modal.css"
+    ]
+}
