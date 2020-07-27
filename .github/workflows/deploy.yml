@@ -13,7 +13,7 @@ jobs:
       - name: Sign
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.x'
         - run: npm install -g web-ext
         - run: cd firefox
         - run: web-ext sign --api-key={{MOZ_API_KEY}} --api-secret={{MOZ_API_SEC}}
