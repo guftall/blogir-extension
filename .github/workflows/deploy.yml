@@ -2,8 +2,8 @@ name: Sign and Release
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -15,10 +15,34 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+
       - run: |
           npm install -g web-ext
-          web-ext sign --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}}
+          web-ext sign -n postautosave_${GITHUB_REF}.xpi --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}}
         working-directory: ./firefox
+
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: true
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./firefox/web-ext-artifacts/postautosave_${GITHUB_REF}.xpi
+          asset_name: postautosave_${GITHUB_REF}.xpi
+          asset_content_type: application/octet-stream
 
       - name: list files
         working-directory: ./firefox
