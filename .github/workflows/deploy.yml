@@ -19,6 +19,8 @@ jobs:
       - run: |
           npm install -g web-ext
           web-ext sign -n postautosave_${GITHUB_REF}.xpi --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}}
+          ls -l
+          ls -l web-ext-artifacts
         working-directory: ./firefox
 
       
@@ -40,7 +42,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./firefox/web-ext-artifacts/postautosave_${GITHUB_REF}.xpi
+          asset_path: ./firefox/postautosave_${GITHUB_REF}.xpi
           asset_name: postautosave_${GITHUB_REF}.xpi
           asset_content_type: application/octet-stream
 
