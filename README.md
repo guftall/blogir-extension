@@ -1,4 +1,4 @@
-# Overview
+# Overview ![Sign and Release](https://github.com/guftall/blogir-extension/workflows/Sign%20and%20Release/badge.svg)
 
 This repository contains a Firefox Add-ons that created to help authors in [blog.ir](http://blog.ir) write their posts without concern of accidentally lost what they wrote. Blog service doesn't support post auto saving yet, so this extension implemented as a workaround for that.
 
