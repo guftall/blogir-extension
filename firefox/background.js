@@ -17,11 +17,3 @@ function showPosts(tab) {
         modal: true
     })
 }
-
-new Config(true, config => {
-
-    setInterval(() => {
-        console.log('interval')
-        console.log(config)
-    }, config.interval_sec * 1000)
-})

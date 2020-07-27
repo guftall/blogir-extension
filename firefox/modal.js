@@ -28,21 +28,49 @@ class Modal {
                     }
                 }
 
-                let modalBody = this.shadow.querySelector('.modal-body')
-                let posts = this.persister.allPosts()
+                let that = this
+                window.addEventListener('_custom_remove_post__', function (e) {
+                    try {
 
-                for (let post of posts) {
+                        let index = e.detail.index
+                        console.log('removing post index ', index)
+                        that.persister.removePost(index)
+                        that._appendPosts()
+                    } catch(err) {
+                        console.log(err)
+                    }
+                })
 
-                    let elem = document.createElement('div')
-                    elem.style.width = '100%'
-                    elem.style.height = '50px'
-                    elem.style.backgroundColor = 'red'
-                    elem.innerHTML = '<p>' + post + '</p>'
-                    modalBody.appendChild(elem)
-                }
+                this._appendPosts()
 
                 return true
             })
+    }
+    _appendPosts() {
+
+        let modalBody = this.shadow.querySelector('.modal-body')
+        modalBody.innerHTML = ''
+        this.persister.allPosts(posts => {
+
+            const now = new Date()
+            for (let i = 0; i < posts.length; i++) {
+
+                let text = posts[i].text
+
+                let expireAt = Math.ceil(Math.abs(posts[i].expireAt - now) / (1000 * 60 * 60))
+
+                let div = document.createElement('div')
+                div.classList.add('text-elem')
+                div.innerHTML = `<p>
+                <span class="_ind">${i}.</span>
+                <span class="_del_date">حدود ${expireAt} ساعت دیگر</span>
+                <span class="_del_btn" onclick="window.dispatchEvent(new CustomEvent('_custom_remove_post__', {detail: {index: ${i}}}))">حذف:</span>
+                <br />
+                ${text}</p>`
+                modalBody.appendChild(div)
+            }
+
+        })
     }
 
     show() {

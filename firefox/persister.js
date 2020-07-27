@@ -1,24 +1,89 @@
 class Persister {
-    allPosts() {
+    defaultExpireAt;
+    constructor() {
 
-        var savedJson = localStorage.getItem('bir_pp')
+        this._loadFromStorage()
+        const that = this
+        Config.loadConfig().then(config => {
+            that.defaultExpireAt = config.persist_days * 24 * 60 * 60 * 1000
+        })
+    }
+    addPost(text) {
 
-        if (savedJson == undefined) {
-            return ['پستی وجود ندارد']
+        let post = new Post()
+        post.text = text
+        this._setPostExpireAt(post)
+        this.postStruct.posts.push(post)
+        this._persistPosts().then(() => { })
+
+        let postIndex = this.postStruct.posts.length - 1
+        return postIndex
+    }
+    updatePost(index, text) {
+        if (index >= this.postStruct.posts.length) {
+            throw new Error('invalid post index: ' + index)
+        }
+        let post = this.postStruct.posts[index]
+
+        post.text = text
+        this._setPostExpireAt(post)
+        this._persistPosts().then(() => { })
+    }
+    _setPostExpireAt(post) {
+
+        post.expireAt = new Date().getTime() + this.defaultExpireAt
+    }
+    _persistPosts() {
+
+        return new Promise((resolve, reject) => {
+
+            chrome.storage.local.set(
+                {
+                    'bir_pp': this.postStruct
+                },
+                items => resolve(items))
+        })
+    }
+    allPosts(cb) {
+
+        if (cb == undefined) {
+            return
         }
 
-        let posts = JSON.parse(savedJson)
+        let that = this
+        this._loadFromStorage(() => {
 
-        let res = []
-        const now = new Date().getTime()
-        for (let post of posts) {
+            cb(that.postStruct.posts)
+        })
+    }
+    _loadFromStorage(cb) {
 
-            if (post.expireAt > now) {
-                res.push(post.text)
+        let that = this
+        chrome.storage.local.get({ 'bir_pp': undefined }, savedJson => {
+
+            if (savedJson == undefined || savedJson.bir_pp == undefined) {
+                that.postStruct = {
+                    posts: []
+                }
+            } else {
+
+                that.postStruct = savedJson.bir_pp
             }
+
+            if (cb != undefined) {
+
+                cb()
+            }
+        })
+    }
+    removePost(index) {
+        console.log(this.postStruct)
+        if (index >= this.postStruct.posts.length) {
+            throw new Error('invalid post index: ' + index)
         }
 
-        return res
+        this.postStruct.posts.splice(index, 1)
+        this._persistPosts()
     }
 }
 

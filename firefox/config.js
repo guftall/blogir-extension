@@ -11,6 +11,13 @@ class Config {
         }
     }
 
+    static editPage() {
+        let url = location.href
+        let _editPage = url.indexOf('post_edit') != -1
+    
+        return _editPage
+    }
+
     static defaultOptions() {
         return {
             'interval_sec': 5,
