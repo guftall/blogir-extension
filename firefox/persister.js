@@ -77,7 +77,6 @@ class Persister {
         })
     }
     removePost(index) {
-        console.log(this.postStruct)
         if (index >= this.postStruct.posts.length) {
             throw new Error('invalid post index: ' + index)
         }
