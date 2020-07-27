@@ -7,8 +7,8 @@ on:
 
 jobs:
   build:
-    name: Greeting
-    runs-on: ubuntu-20
+    name: Building
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Sign
