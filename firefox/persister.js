@@ -1,5 +1,4 @@
 class Persister {
-    defaultExpireAt;
     constructor() {
 
         this._loadFromStorage()
