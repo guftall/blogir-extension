@@ -17,7 +17,7 @@ jobs:
           node-version: '12.x'
       - run: |
           npm install -g web-ext
-          web-ext sign --api-key={{MOZ_API_KEY}} --api-secret={{MOZ_API_SEC}}
+          web-ext sign --api-key=$MOZ_API_KEY --api-secret=$MOZ_API_SEC
         working-directory: ./firefox
 
       - name: list files
