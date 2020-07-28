@@ -11,7 +11,7 @@ let manifest = require(manifestPath)
 console.log('previous version: ', manifest.version)
 
 let tagArg = process.argv[2]
-const tag = tagArg + 'selfdist'
+const tag = tagArg + '.selfdist'
 console.log(`versioning Add-on to: ${tag}`)
 
 manifest.version = tag
