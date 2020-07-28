@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - 'release/**'
+
+jobs:
+  build:
+    name: Building Firefox Add-on
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - uses: olegtarasov/get-tag@v2
+        id: tagName
+
+      - run: |
+          npm install -g web-ext
+          web-ext sign --channel=listed --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}}
+          ls -l
+          ls -l web-ext-artifacts
+        working-directory: ./firefox
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          body_path: ./release.md
