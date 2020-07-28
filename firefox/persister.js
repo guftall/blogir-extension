@@ -64,7 +64,7 @@ class Persister {
     _loadFromStorage(cb) {
 
         let that = this
-        chrome.storage.local.get({ 'bir_pp': undefined }, savedJson => {
+        chrome.storage.local.get(['bir_pp'], savedJson => {
 
             if (savedJson == undefined || savedJson.bir_pp == undefined) {
                 that.postStruct = {
