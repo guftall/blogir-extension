@@ -19,9 +19,10 @@ jobs:
       - uses: olegtarasov/get-tag@v2
         id: tagName
 
+      - run: node fx-version.js ${{steps.tagName.outputs.tag}}
+
       - run: |
           npm install -g web-ext
-          node fx-version.js ${{steps.tagName.outputs.tag}}
           web-ext sign --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}} > web-ext.output
           ls -l
           ls -l web-ext-artifacts
