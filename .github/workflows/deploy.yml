@@ -48,7 +48,8 @@ jobs:
           asset_path: ./firefox/postautosave-${{steps.tagName.outputs.tag}}-an+fx.xpi
           asset_name: postautosave-${{steps.tagName.outputs.tag}}-an+fx.xpi
           asset_content_type: application/octet-stream
-        run: echo ${{ github.ref }}
+
+      -run: echo ${{ github.ref }}
 
       - name: list files
         working-directory: ./firefox
