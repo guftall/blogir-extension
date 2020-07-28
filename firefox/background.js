@@ -1,4 +1,4 @@
-chrome.contextMenus.removeAll(function(){
+chrome.contextMenus.removeAll(function () {
     chrome.contextMenus.create({
         id: 'showPersistedPosts',
         title: "پست های ذخیره شده",
