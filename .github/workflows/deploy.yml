@@ -16,7 +16,11 @@ jobs:
         with:
           node-version: '12.x'
 
-      - run: |
+      - uses: actions/upload-artifact@v2
+        with:
+          name: web-ext-output
+          path: ./firefox/web-ext.output
+        run: |
           npm install -g web-ext
           web-ext sign --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}} > web-ext.output
           ls -l
@@ -49,7 +53,3 @@ jobs:
           asset_name: postautosave-${{steps.tagName.outputs.tag}}-an+fx.xpi
           asset_content_type: application/octet-stream
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: web-ext-output
-          path: ./firefox/web-ext.output
