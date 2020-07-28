@@ -3,7 +3,7 @@ name: Sign and Release
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 
 jobs:
   build:
