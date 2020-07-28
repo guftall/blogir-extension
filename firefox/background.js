@@ -1,3 +1,9 @@
+/*!
+ * blogir-extension
+ * Copyright(c) 2020 Omid Dehghani
+ * MIT Licensed
+ */
+
 chrome.contextMenus.removeAll(function () {
     chrome.contextMenus.create({
         id: 'showPersistedPosts',

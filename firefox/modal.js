@@ -1,3 +1,9 @@
+/*!
+ * blogir-extension
+ * Copyright(c) 2020 Omid Dehghani
+ * MIT Licensed
+ */
+
 class Modal {
     constructor() {
         this.persister = new Persister()

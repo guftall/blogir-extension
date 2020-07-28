@@ -1,3 +1,8 @@
+/*!
+ * blogir-extension
+ * Copyright(c) 2020 Omid Dehghani
+ * MIT Licensed
+ */
 
 function initialize() {
     if (!Config.editPage()) {
