@@ -17,3 +17,6 @@ console.log(`versioning Add-on to: ${tag}`)
 manifest.version = tag
 
 require('fs').writeFileSync(manifestPath, JSON.stringify(manifest))
+
+console.log('outputing version to github workflow..')
+console.log(`::set-output name=addon_version::${tag}`)

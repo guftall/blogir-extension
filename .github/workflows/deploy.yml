@@ -20,18 +20,19 @@ jobs:
         id: tagName
 
       - run: node fx-version.js ${{steps.tagName.outputs.tag}}
+        id: versioning
 
       - run: |
           npm install -g web-ext
-          web-ext sign --channel=unlisted --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}}
+          web-ext sign --channel=unlisted --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}} > web-ext.output
           ls -l
           ls -l web-ext-artifacts
         working-directory: ./firefox
 
-      # - uses: actions/upload-artifact@v2
-      #   with:
-      #     name: web-ext-output
-      #     path: ./firefox/web-ext.output
+      - uses: actions/upload-artifact@v2
+        with:
+          name: web-ext-output
+          path: ./firefox/web-ext.output
       
       - name: Create Release
         id: create_release
@@ -51,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./firefox/web-ext-artifacts/postautosave-${{steps.tagName.outputs.tag}}-an+fx.xpi
-          asset_name: postautosave-${{steps.tagName.outputs.tag}}-an+fx.xpi
+          asset_path: ./firefox/web-ext-artifacts/postautosave-${{steps.versioning.outputs.addon_version}}-an+fx.xpi
+          asset_name: postautosave-${{steps.versioning.outputs.addon_version}}-an+fx.xpi
           asset_content_type: application/octet-stream
 
