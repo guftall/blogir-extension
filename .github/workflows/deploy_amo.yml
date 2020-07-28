@@ -16,9 +16,6 @@ jobs:
         with:
           node-version: '12.x'
 
-      - uses: olegtarasov/get-tag@v2
-        id: tagName
-
       - run: |
           npm install -g web-ext
           web-ext sign --channel=listed --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}} || echo 'Done'
@@ -26,14 +23,19 @@ jobs:
           ls -l web-ext-artifacts
         working-directory: ./firefox
       
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/release/})"
+        id: extract_branch
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.extract_branch.outputs.branch }}
+          release_name: Release ${{ steps.extract_branch.outputs.branch }}
           draft: false
           prerelease: false
           body_path: ./release.md
