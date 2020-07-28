@@ -16,8 +16,12 @@ jobs:
         with:
           node-version: '12.x'
 
+      - uses: olegtarasov/get-tag@v2
+        id: tagName
+
       - run: |
           npm install -g web-ext
+          node fx-version.js ${{steps.tagName.outputs.tag}}
           web-ext sign --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}} > web-ext.output
           ls -l
           ls -l web-ext-artifacts
@@ -38,9 +42,6 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: true
-
-      - uses: olegtarasov/get-tag@v2
-        id: tagName
 
       - name: Upload Release Asset
         id: upload-release-asset 
