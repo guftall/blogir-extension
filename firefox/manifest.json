@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "PostAutoSave",
-    "version": "1.0pre8",
+    "version": "1.0pre9",
     "description": "Adds auto save functionality to blog.ir panel",
     "homepage_url": "https://github.com/guftall/blogir-extension",
     "icons": {

@@ -47,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./firefox/postautosave-${{steps.tagName.outputs.tag}}-an+fx.xpi
+          asset_path: ./firefox/web-ext-artifacts/postautosave-${{steps.tagName.outputs.tag}}-an+fx.xpi
           asset_name: postautosave-${{steps.tagName.outputs.tag}}-an+fx.xpi
           asset_content_type: application/octet-stream
 
