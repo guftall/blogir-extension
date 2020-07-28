@@ -13,6 +13,9 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 })
 
 function showPosts(tab) {
+    if (tab.url.indexOf('blog.ir/panel') == -1) {
+        return
+    }
     chrome.tabs.sendMessage(tab.id, {
         modal: true
     })
