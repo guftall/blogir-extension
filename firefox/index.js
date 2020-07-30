@@ -17,10 +17,14 @@ function initialize() {
     span.style.borderRadius = '4px'
     span.style.display = 'none'
 
+    var persistColor = ''
+    var unsavedColor = ''
+    var persistText = ''
+    var unsavedText = ''
+
     let input = document.createElement('input')
-    input.style.border = '1px solid rgba(18, 96, 31, 0.55)'
-    input.style.backgroundColor = 'rgb(203, 255, 212)'
-    input.style.color = 'rgb(53, 53, 53)'
+    input.style.border = '1px solid rgba(76, 77, 85, 0.55)'
+    input.style.backgroundColor = persistColor
     input.style.width = '66px'
     input.style.textAlign = 'center'
     input.style.direction = 'rtl'
@@ -44,6 +48,12 @@ function initialize() {
 
         let durationSec = 5 // config.interval_sec
 
+        persistColor = config['persist_color']
+        unsavedColor = config['unsaved_color']
+        persistText = config['persist_text']
+        unsavedText = config['unsaved_text']
+
+        input.style.color = config['text_color']
 
         startCheckInterval()
         startPersisterInterval(durationSec)
@@ -104,13 +114,13 @@ function initialize() {
     }
 
     function showUnsaved() {
-        setContainerColor('rgb(255, 233, 233)')
-        updateAutosaveContainer('ذخیره نشده!')
+        setContainerColor(unsavedColor)
+        updateAutosaveContainer(unsavedText)
     }
 
     function showSaved() {
-        setContainerColor('rgb(203, 255, 212)')
-        updateAutosaveContainer('ذخیره شد')
+        setContainerColor(persistColor)
+        updateAutosaveContainer(persistText)
     }
 
     function setContainerColor(color) {

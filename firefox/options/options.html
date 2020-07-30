@@ -5,11 +5,13 @@
  * -->
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>__MSG_optionsPageTitle__</title>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="options.css">
 </head>
+
 <body>
   <p class="title">تنظیمات</p>
   <form>
@@ -31,6 +33,46 @@
         </td>
       </tr>
       <tr>
+        <td class="col1">
+          رنگ ذخیره شده
+        </td>
+        <td class="col2">
+          <label><input type="text" name="persistColor" id="persistColor" required></label>
+        </td>
+      </tr>
+      <tr>
+        <td class="col1">
+          رنگ ذخیره نشده
+        </td>
+        <td class="col2">
+          <label><input type="text" name="unsavedColor" id="unsavedColor" required></label>
+        </td>
+      </tr>
+      <tr>
+        <td class="col1">
+          متن ذخیره شده
+        </td>
+        <td class="col2">
+          <label><input type="text" name="persistText" id="persistText" required></label>
+        </td>
+      </tr>
+      <tr>
+        <td class="col1">
+          متن ذخیره نشده
+        </td>
+        <td class="col2">
+          <label><input type="text" name="unsavedText" id="unsavedText" required></label>
+        </td>
+      </tr>
+      <tr>
+        <td class="col1">
+          رنگ متن
+        </td>
+        <td class="col2">
+          <label><input type="text" name="textColor" id="textColor" required></label>
+        </td>
+      </tr>
+      <tr>
         <td class="col1 no-border">
           <button type="submit" id="submit" class="button">ذخیره</button>
         </td>
@@ -43,4 +85,5 @@
   <script src="../config.js"></script>
   <script src="options.js"></script>
 </body>
+
 </html>

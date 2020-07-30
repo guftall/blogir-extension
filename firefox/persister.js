@@ -7,10 +7,16 @@
 class Persister {
     constructor() {
 
-        this._loadFromStorage()
+        this.postStruct = {
+            posts: []
+        }
+        this.defaultExpireDurationMs = 1 * 24 * 60 * 60 * 1000
         const that = this
+        this._loadFromStorage(() => {
+            that._removeExpiredPosts()
+        })
         Config.loadConfig().then(config => {
-            that.defaultExpireAt = config.persist_days * 24 * 60 * 60 * 1000
+            that.defaultExpireDurationMs = config.persist_days * 24 * 60 * 60 * 1000
         })
     }
     addPost(text) {
@@ -34,21 +40,6 @@ class Persister {
         this._setPostExpireAt(post)
         this._persistPosts().then(() => { })
     }
-    _setPostExpireAt(post) {
-
-        post.expireAt = new Date().getTime() + this.defaultExpireAt
-    }
-    _persistPosts() {
-
-        return new Promise((resolve, reject) => {
-
-            chrome.storage.local.set(
-                {
-                    'bir_pp': this.postStruct
-                },
-                items => resolve(items))
-        })
-    }
     allPosts(cb) {
 
         if (cb == undefined) {
@@ -61,6 +52,15 @@ class Persister {
             cb(that.postStruct.posts)
         })
     }
+    removePost(index) {
+        if (index >= this.postStruct.posts.length) {
+            throw new Error('invalid post index: ' + index)
+        }
+
+        this.postStruct.posts.splice(index, 1)
+        this._persistPosts()
+    }
+
     _loadFromStorage(cb) {
 
         let that = this
@@ -81,13 +81,39 @@ class Persister {
             }
         })
     }
-    removePost(index) {
-        if (index >= this.postStruct.posts.length) {
-            throw new Error('invalid post index: ' + index)
+    _removeExpiredPosts() {
+        const now = new Date().getTime()
+        const posts = this.postStruct.posts
+        const removeIndexes = []
+        for (let i = posts.length - 1; i >= 0; i--) {
+
+            if (posts[i].expireAt < now) {
+                removeIndexes.push(i)
+            }
         }
 
-        this.postStruct.posts.splice(index, 1)
-        this._persistPosts()
+        removeIndexes.sort((a, b) => a > b)
+
+        while (removeIndexes.length > 0) {
+            posts.splice(removeIndexes.pop(), 1)
+        }
+
+        this._persistPosts().then(() => { })
+    }
+    _persistPosts() {
+
+        return new Promise((resolve, reject) => {
+
+            chrome.storage.local.set(
+                {
+                    'bir_pp': this.postStruct
+                },
+                items => resolve(items))
+        })
+    }
+    _setPostExpireAt(post) {
+
+        post.expireAt = new Date().getTime() + this.defaultExpireDurationMs
     }
 }
 
