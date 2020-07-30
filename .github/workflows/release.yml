@@ -24,15 +24,10 @@ jobs:
 
       - run: |
           npm install -g web-ext
-          web-ext sign --channel=unlisted --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}} > web-ext.output
+          web-ext sign --channel=unlisted --api-key=${{secrets.MOZ_API_KEY}} --api-secret=${{secrets.MOZ_API_SEC}}
           ls -l
           ls -l web-ext-artifacts
         working-directory: ./firefox
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: web-ext-output
-          path: ./firefox/web-ext.output
       
       - name: Create Release
         id: create_release
