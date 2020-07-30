@@ -9,7 +9,7 @@ This repository contains a Firefox Add-ons that created to help authors in [blog
 
 ## Download
 
-- You can **[download](#)** this extension for Firefox.
+- You can **[download](https://addons.mozilla.org/en-US/firefox/addon/blogirpostautosave/)** this extension for Firefox.
 - I will publish it as a Chrome extension as soon as i can.
 
 ## Try without install
