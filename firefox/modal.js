@@ -14,6 +14,19 @@ class Modal {
 
         this.shadow = this.element.attachShadow({ mode: 'open' })
 
+        const that = this
+        document.addEventListener('keyup', e => {
+            if (e.defaultPrevented) {
+                return;
+            }
+
+            var key = e.key || e.keyCode
+
+            if (key === 'Escape' || key === 'Esc' || key === 27) {
+                that.hide()
+            }
+        })
+
         return fetch(chrome.runtime.getURL('content/modal.html'))
             .then(res => res.text())
             .then(html => {
@@ -42,7 +55,7 @@ class Modal {
                         console.log('removing post index ', index)
                         that.persister.removePost(index)
                         that._appendPosts()
-                    } catch(err) {
+                    } catch (err) {
                         console.log(err)
                     }
                 })

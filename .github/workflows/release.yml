@@ -1,4 +1,4 @@
-name: Sign and Release
+name: Preview Release
 
 on:
   push:
